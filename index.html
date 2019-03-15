@@ -4,23 +4,60 @@
 <head>
   <title>ProPresenter Suite</title>
   <link rel="stylesheet" href="./assets/css/main.css">
-  <style>
-    body {
-      text-align: center;
-    }
-
-    footer {
-      text-align: center;
-    }
-  </style>
 </head>
 
 <body>
+  <h1>ProPresenter Suite</h1>
+
   <p>Beende ProPresenter, bevor du fortfährst.</p>
-  <br>
-  <button id="fillNotesBtn">Fülle Notizen</button>
+
+  <div class="row">
+    <h3>Zwei Sprachen zusammenführen</h3>
+    <p>Führt zwei Dokumente zu einem zusammen, in dem es die Textelemente aus dem
+      Dokument mit der Übersetzung in das Dokument mit dem gesungenen Text einfügt.</p>
+    <div class="row">
+      <div class="column">
+        <p>Dokument mit gesungenem Text</p>
+      </div>
+      <div class="column">
+        <button id="browseLang1">Durchsuchen</button>
+      </div>
+    </div>
+    <div class="row">
+      <div class="column">
+        <p>Dokument mit Übersetzung</p>
+      </div>
+      <div class="column">
+        <button id="browseLang2">Durchsuchen</button>
+      </div>
+    </div>
+    <div class="row">
+      <button id="mergeLangBtn">Starten</button>
+    </div>
+  </div>
+
+  <div class="row">
+    <h3>Sprachen tauschen</h3>
+    <div class="column">
+      <p>Tauscht die Sprachen in einem Dokument.</p>
+    </div>
+    <div class="column">
+      <button id="switchLangBtn">Durchsuchen</button>
+    </div>
+  </div>
+
+  <div class="row">
+    <h3>Notizen füllen</h3>
+    <div class="column">
+      <p>Füllt die Notizen eines Dokuments mit dem gesungenem Text.</p>
+    </div>
+    <div class="colum">
+      <button id="fillNotesBtn">Durchsuchen</button>
+    </div>
+  </div>
+
   <script>
-    require('./fillNotes.js')
+    require('./renderer.js')
   </script>
 </body>
 
