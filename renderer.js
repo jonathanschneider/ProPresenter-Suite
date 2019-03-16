@@ -41,12 +41,12 @@ browseLang2.addEventListener('click', (event) => {
 
 switchLangBtn.addEventListener('click', (event) => {
   curFunction = "switchLang";
-  ipcRenderer.send('open-file-dialog');
+  ipcRenderer.send('open-file-dialog', 'multiSelections');
 });
 
 fillNotesBtn.addEventListener('click', (event) => {
   curFunction = "fillNotes";
-  ipcRenderer.send('open-file-dialog');
+  ipcRenderer.send('open-file-dialog', 'multiSelections');
 });
 
 // Process selected files from main process
@@ -110,6 +110,14 @@ function switchLang(pathToFile) {
   // Read file
   let file = fs.readFileSync(pathToFile, 'utf8');
 
+  // parseFile2(file)
+  // .then(function(parsedFile) {
+  //   ipcRenderer.send('log', parsedFile);
+  // })
+  // .catch(function(err) {
+  //   ipcRenderer.send('log', err);
+  // })
+
   parseFile(file) // Parse file
     .then(function(newFile) {
       newFile = changeOrder(newFile); // Loop through slides and change order of text elements
@@ -150,7 +158,6 @@ function mainFillNotes(pathToFile) {
 
 // Parse file
 function parseFile(file) {
-  //console.log("Parsing file");
   return new Promise((resolve, reject) => {
     parser.parseString(file, function(err, result) {
       if (err) {
@@ -161,6 +168,12 @@ function parseFile(file) {
       }
     });
   });
+}
+
+async function parseFile2(file) {
+  let parsedFile = await parser.parseString(file);
+  ipcRenderer.send('log', "File parsed with parseFile2");
+  return parsedFile;
 }
 
 function changeOrder(file) {
@@ -255,7 +268,7 @@ function fillNotes(parsedFile) {
   });
   ipcRenderer.send('log', "Notes filled");
   Promise.all(promises);
-  return promises[promises.length - 1]; // Actual file is last element of Promise array
+  return promises[promises.length - 1]; // Actual file is in last element of Promise array
 }
 
 // Build XML file

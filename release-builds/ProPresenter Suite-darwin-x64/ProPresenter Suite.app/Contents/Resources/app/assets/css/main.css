@@ -1,0 +1,57 @@
+@import url('https://fonts.googleapis.com/css?family=Montserrat:300,600');
+
+body {
+  background: #303340;
+  color: #fff;
+  font-family: 'Montserrat';
+  margin: 10px;
+}
+
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.column {
+  float: left;
+  width: 50%;
+}
+
+.subtext {
+  font-size: .8em;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+
+img {
+  width: 20px;
+}
+
+h1 {
+  margin: 0 0 20px 0;
+}
+
+button {
+  float: right;
+  background: #188986;
+  border: none;
+  color: #fff;
+  text-transform: uppercase;
+  padding: 10px;
+  margin: 10px;
+  cursor: pointer;
+  /*margin: auto;
+  display: block;*/
+}
+
+#cancelButton {
+  float: right;
+  background: #188986;
+  border: none;
+  color: #fff;
+  text-transform: uppercase;
+  padding: 10px;
+  margin-right: 30px;
+  cursor: pointer;
+}
