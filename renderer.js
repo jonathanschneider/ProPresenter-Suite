@@ -89,7 +89,7 @@ function mergeLang(pathTofile1, pathToFile2) {
   let file1 = fs.readFileSync(pathToFile1, 'utf8');
   let file2 = fs.readFileSync(pathToFile2, 'utf8');
 
-  parseFile(file) // Parse file
+  parseFile(file1) // Parse file 1
     .then(changeOrder) // Loop through slides and change order of text elements
     .then(buildXML) // Re-build XML
     .then(function(newFile) {
@@ -164,62 +164,36 @@ function parseFile(file) {
 }
 
 function changeOrder(file) {
-  var promises = [];
-  let string;
-  var isLast;
-
   // Loop through all groups
   file.RVPresentationDocument.array[0].RVSlideGrouping.forEach(function(currentGroup, indexGroup) {
 
     // Check if slides exist, otherwise abort
     if (!currentGroup.array[0].hasOwnProperty("RVDisplaySlide")) {
       ipcRenderer.send('log', "Document doesn't have any slides");
-      promises.push(file);
       return;
     }
 
     // Loop through all slides
     currentGroup.array[0].RVDisplaySlide.forEach(function(currentSlide, indexSlide) {
+      if (currentSlide.array[1].hasOwnProperty("RVTextElement") &&
+        currentSlide.array[1].RVTextElement.length == 2) {
+        // Save string of top text element
+        let string = currentSlide.array[1].RVTextElement[0].NSString[0];
+        currentSlide.array[1].RVTextElement[0].NSString[0] = currentSlide.array[1].RVTextElement[1].NSString[0];
+        currentSlide.array[1].RVTextElement[0].$.displayName = 'Main';
+        currentSlide.array[1].RVTextElement[1].NSString[0] = string;
+        currentSlide.array[1].RVTextElement[1].$.displayName = 'Translation';
+      }
 
-      var currentSlidesPromise = new Promise(function(resolve, reject) {
-
-        // Check if current slide is last slide
-        if ((indexGroup == file.RVPresentationDocument.array[0].RVSlideGrouping.length - 1) &&
-          (indexSlide == currentGroup.array[0].RVDisplaySlide.length - 1)) {
-          isLast = true;
-        }
-
-        if (currentSlide.array[1].hasOwnProperty("RVTextElement") &&
-          currentSlide.array[1].RVTextElement.length == 2) {
-          // Save string of top text element
-          string = currentSlide.array[1].RVTextElement[0].NSString[0];
-          currentSlide.array[1].RVTextElement[0].NSString[0] = currentSlide.array[1].RVTextElement[1].NSString[0];
-          currentSlide.array[1].RVTextElement[0].$.displayName = 'Main';
-          currentSlide.array[1].RVTextElement[1].NSString[0] = string;
-          currentSlide.array[1].RVTextElement[1].$.displayName = 'Translation';
-
-          // Resolve and return parsed file if current slide is last slide in document
-          if (isLast) {
-            resolve(file);
-          } else { // Else only resolve without returning parsed file
-            resolve();
-          }
-        } else { // Slide doesn't have two text elements
-          // Resolve and return parsed file if current slide is last slide in document
-          if (isLast) {
-            resolve(file);
-          } else { // Else only resolve without returning parsed file
-            resolve();
-          }
-        }
-
-      });
-      promises.push(currentSlidesPromise);
+      // Check if current slide is last slide
+      if ((indexGroup == file.RVPresentationDocument.array[0].RVSlideGrouping.length - 1) &&
+        (indexSlide == currentGroup.array[0].RVDisplaySlide.length - 1)) {
+        ipcRenderer.send('log', "Languages switched");
+        return (file);
+      }
     });
   });
-  ipcRenderer.send('log', "Languages switched");
-  return Promise.all(promises);
-}
+};
 
 // Fill notes
 function fillNotes(parsedFile) {
