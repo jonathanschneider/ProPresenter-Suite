@@ -111,9 +111,9 @@ function switchLang(pathToFile) {
   let file = fs.readFileSync(pathToFile, 'utf8');
 
   parseFile(file) // Parse file
-    .then(changeOrder) // Loop through slides and change order of text elements
-    .then(buildXML) // Re-build XML
     .then(function(newFile) {
+      newFile = changeOrder(newFile); // Loop through slides and change order of text elements
+      newFile = buildXML(newFile); // Re-build XML
       // Write file
       fs.writeFile(path.resolve(pathToFile), newFile, function(err) {
         if (err) throw err;
@@ -132,9 +132,9 @@ function mainFillNotes(pathToFile) {
   let file = fs.readFileSync(pathToFile, 'utf8');
 
   parseFile(file) // Parse file
-    .then(fillNotes) // Loop through slides and fill notes
-    .then(buildXML) // Re-build XML
+    .then(fillNotes) // Fill notes
     .then(function(newFile) {
+      newFile = buildXML(newFile); // Re-build XML
       // Write file
       fs.writeFile(path.resolve(pathToFile), newFile, function(err) {
         if (err) throw err;
@@ -170,7 +170,7 @@ function changeOrder(file) {
     // Check if slides exist, otherwise abort
     if (!currentGroup.array[0].hasOwnProperty("RVDisplaySlide")) {
       ipcRenderer.send('log', "Document doesn't have any slides");
-      return;
+      return file;
     }
 
     // Loop through all slides
@@ -184,16 +184,11 @@ function changeOrder(file) {
         currentSlide.array[1].RVTextElement[1].NSString[0] = string;
         currentSlide.array[1].RVTextElement[1].$.displayName = 'Translation';
       }
-
-      // Check if current slide is last slide
-      if ((indexGroup == file.RVPresentationDocument.array[0].RVSlideGrouping.length - 1) &&
-        (indexSlide == currentGroup.array[0].RVDisplaySlide.length - 1)) {
-        ipcRenderer.send('log', "Languages switched");
-        return (file);
-      }
     });
   });
-};
+  ipcRenderer.send('log', "Languages switched");
+  return file;
+}
 
 // Fill notes
 function fillNotes(parsedFile) {
@@ -259,15 +254,13 @@ function fillNotes(parsedFile) {
     });
   });
   ipcRenderer.send('log', "Notes filled");
-  return Promise.all(promises);
+  Promise.all(promises);
+  return promises[promises.length - 1]; // Actual file is last element of Promise array
 }
 
 // Build XML file
 function buildXML(file) {
-  // Promises of for-loop made parsedFile into array with undefined elements
-  // Actual parsed file is stored in last element
-  file = file[file.length - 1];
-  var newFile = builder.buildObject(file);
   ipcRenderer.send('log', "XML rebuilt");
-  return Promise.resolve(newFile);
+  return builder.buildObject(file);
+  //return Promise.resolve(newFile);
 }
