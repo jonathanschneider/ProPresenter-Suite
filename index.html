@@ -11,42 +11,51 @@
 
   <p>Beende ProPresenter, bevor du fortfährst.</p>
 
-  <div class="row">
+  <hr>
+  <!-- <div class="row"> -->
     <h3>Zwei Sprachen zusammenführen</h3>
     <p>Führt zwei Dokumente zu einem zusammen, in dem es die Textelemente aus dem
       Dokument mit der Übersetzung in das Dokument mit dem gesungenen Text einfügt.</p>
     <div class="row">
+      <p>Dokument mit gesungenem Text:</p>
+    <!-- </div> -->
+    <!-- <div class="row"> -->
       <div class="column">
-        <p>Dokument mit gesungenem Text</p>
+        <input id="fileLang1Field" type="text" value="" readonly size="80">
       </div>
       <div class="column">
         <button id="browseLang1">Durchsuchen</button>
       </div>
     </div>
     <div class="row">
+      <p>Dokument mit Übersetzung:</p>
+    <!-- </div>
+    <div class="row"> -->
       <div class="column">
-        <p>Dokument mit Übersetzung</p>
+        <input id="fileLang2Field" type="text" value="" readonly size="80">
       </div>
       <div class="column">
         <button id="browseLang2">Durchsuchen</button>
       </div>
     </div>
     <div class="row">
-      <button id="mergeLangBtn">Starten</button>
+      <button id="mergeLangBtn" style="margin-top:5px" disabled>Starten</button>
     </div>
-  </div>
+  <!-- </div> -->
 
+  <hr>
   <div class="row">
     <h3>Sprachen tauschen</h3>
     <div class="column">
       <p>Tauscht die Sprachen in einem Dokument.</p>
     </div>
     <div class="column">
-      <button id="switchLangBtn">Durchsuchen</button>
+      <button id="switchLangBtn" size=100px>Durchsuchen</button>
     </div>
   </div>
 
-  <div class="row">
+  <hr>
+  <!-- <div class="row"> -->
     <h3>Notizen füllen</h3>
     <div class="column">
       <p>Füllt die Notizen eines Dokuments mit dem gesungenem Text.</p>
@@ -54,7 +63,7 @@
     <div class="colum">
       <button id="fillNotesBtn">Durchsuchen</button>
     </div>
-  </div>
+  <!-- </div> -->
 
   <script>
     require('./renderer.js')

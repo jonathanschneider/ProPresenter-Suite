@@ -16,9 +16,12 @@ var notification = {
 };
 
 let curFunction = "";
-let fileLang1, fileLang2;
 
-// Read buttons
+// Text fields
+let fileLang1 = document.getElementById('fileLang1Field');
+let fileLang2 = document.getElementById('fileLang2Field');
+
+// Buttons
 const browseLang1 = document.getElementById('browseLang1');
 const browseLang2 = document.getElementById('browseLang2');
 const mergeLangBtn = document.getElementById('mergeLangBtn');
@@ -50,10 +53,16 @@ fillNotesBtn.addEventListener('click', (event) => {
 ipcRenderer.on('selected-files', (event, files) => {
   switch (curFunction) {
     case "browseLang1":
-      fileLang1 = files;
+      fileLang1.value = files;
+      if (fileLang2Field.value != "") {
+        mergeLangBtn.disabled = false;
+      }
       break;
     case "browseLang2":
-      fileLang2 = files;
+      fileLang2.value = files;
+      if (fileLang1Field.value != "") {
+        mergeLangBtn.disabled = false;
+      }
       break;
     case "switchLang":
       ipcRenderer.send('log', "Files to process: " + files.length);
@@ -75,8 +84,26 @@ mergeLangBtn.addEventListener('click', (event) => {
 });
 
 // Functions
-function mergeLang(pathToFile) {
-  ;
+function mergeLang(pathTofile1, pathToFile2) {
+  // Read files
+  let file1 = fs.readFileSync(pathToFile1, 'utf8');
+  let file2 = fs.readFileSync(pathToFile2, 'utf8');
+
+  parseFile(file) // Parse file
+    .then(changeOrder) // Loop through slides and change order of text elements
+    .then(buildXML) // Re-build XML
+    .then(function(newFile) {
+      // Write file
+      fs.writeFile(path.resolve(pathToFile), newFile, function(err) {
+        if (err) throw err;
+        ipcRenderer.send('log', path.basename(pathToFile) + " saved");
+        notification.body = 'Sprachen wurden in ' + path.basename(pathToFile) + ' zusammengeführt';
+        const myNotification = new window.Notification(notification.title, notification);
+      });
+    })
+    .catch(function(error) {
+      ipcRenderer.send('log', "Error: " + error);
+    });
 }
 
 function switchLang(pathToFile) {

@@ -5,6 +5,7 @@ body {
   color: #fff;
   font-family: 'Montserrat';
   margin: 10px;
+  font-size: 14px;
 }
 
 .row:after {
@@ -39,19 +40,20 @@ button {
   color: #fff;
   text-transform: uppercase;
   padding: 10px;
-  margin: 10px;
   cursor: pointer;
-  /*margin: auto;
-  display: block;*/
+  width: 140px;
+  margin: 0 0 5px 0;
 }
 
-#cancelButton {
-  float: right;
-  background: #188986;
-  border: none;
-  color: #fff;
-  text-transform: uppercase;
-  padding: 10px;
-  margin-right: 30px;
-  cursor: pointer;
+button:disabled {
+  background: #B8C7D6;
+  color: grey;
+}
+
+hr {
+  display: block;
+  margin: 5px auto 5px auto;
+  border-style: inset;
+  border-width: 1px;
+  border: 0.5px solid white;
 }
