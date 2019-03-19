@@ -12,11 +12,11 @@ function createWindow() {
   // Create the browser window.
   mainWindow = new BrowserWindow({
     width: 700,
-    height: 650
-  })
+    height: 675,
+  });
 
   // and load the index.html of the app.
-  mainWindow.loadFile('index.html')
+  mainWindow.loadFile('index.html');
 
   // Open the DevTools.
   // mainWindow.webContents.openDevTools()
@@ -26,12 +26,12 @@ function createWindow() {
     // Dereference the window object, usually you would store windows
     // in an array if your app supports multi windows, this is the time
     // when you should delete the corresponding element.
-    mainWindow = null
-  })
+    mainWindow = null;
+  });
 }
 
 // Create main window when Electron has finished initialization
-app.on('ready', createWindow)
+app.on('ready', createWindow);
 
 // Open file dialog upon request
 ipcMain.on('open-file-dialog', (event, selection) => {
@@ -43,10 +43,10 @@ ipcMain.on('open-file-dialog', (event, selection) => {
     }]
   }, (files) => {
     if (files) {
-      event.sender.send('selected-files', files)
+      event.sender.send('selected-files', files);
     }
-  })
-})
+  });
+});
 
 // Log messages to console for debugging
 ipcMain.on('log', (event, message) => {
@@ -59,5 +59,5 @@ ipcMain.on('quit', (event) => {
 
 // Quit when all windows are closed.
 app.on('window-all-closed', function() {
-  app.quit()
-})
+  app.quit();
+});

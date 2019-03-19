@@ -14,19 +14,14 @@ body {
   clear: both;
 }
 
-.column {
+.left {
   float: left;
-  width: 50%;
+  width: 525px;
 }
 
-.subtext {
-  font-size: .8em;
-  text-transform: uppercase;
-  margin-bottom: 10px;
-}
-
-img {
-  width: 20px;
+.right {
+  float: right;
+  width: 155px;
 }
 
 h1 {
@@ -42,7 +37,6 @@ button {
   padding: 10px;
   cursor: pointer;
   width: 140px;
-  margin: 0 0 5px 0;
 }
 
 button:disabled {
@@ -50,9 +44,14 @@ button:disabled {
   color: grey;
 }
 
+input {
+  height: 26px;
+  width: 100%;
+}
+
 hr {
   display: block;
-  margin: 5px auto 5px auto;
+  margin: 10px auto 10px auto;
   border-style: inset;
   border-width: 1px;
   border: 0.5px solid white;
