@@ -85,18 +85,23 @@ async function mergeLangMain(pathToFile1, pathToFile2) {
   const file1 = fs.readFileSync(pathToFile1, 'utf8');
   const file2 = fs.readFileSync(pathToFile2, 'utf8');
 
-  // Parse files
-  let parsedFiles = await Promise.all([parseFile(file1), parseFile(file2)]);
+  try {
+    // Parse files
+    let parsedFiles = await Promise.all([parseFile(file1), parseFile(file2)]);
 
-  newFile = mergeLang(parsedFiles); // Loop through slides and change order of text elements
-  newFile = buildXML(newFile); // Re-build XML
-  // Write file
-  fs.writeFile(path.resolve(pathToFile1), newFile, function(err) {
-    if (err) throw err;
-    ipcRenderer.send('log', path.basename(pathToFile1) + " saved");
-    notification.body = 'Sprachen wurden in ' + path.basename(pathToFile1) + ' zusammengeführt';
-    const myNotification = new window.Notification(notification.title, notification);
-  });
+    newFile = mergeLang(parsedFiles); // Loop through slides and change order of text elements
+    newFile = buildXML(newFile); // Re-build XML
+    // Write file
+    fs.writeFile(path.resolve(pathToFile1), newFile, function(err) {
+      if (err) throw err;
+      ipcRenderer.send('log', path.basename(pathToFile1) + " saved");
+      notification.body = 'Sprachen wurden in ' + path.basename(pathToFile1) + ' zusammengeführt';
+      const myNotification = new window.Notification(notification.title, notification);
+    });
+  } catch (error) {
+    ipcRenderer.send('open-error-dialog', error);
+    ipcRenderer.send('log', "Error: " + error);
+  }
 }
 
 function mergeLang(files) {
@@ -104,19 +109,16 @@ function mergeLang(files) {
 
   // Check if documents have same number of groups
   if (files[0].RVPresentationDocument.array[0].RVSlideGrouping.length != files[1].RVPresentationDocument.array[0].RVSlideGrouping.length) {
-    ipcRenderer.send('log', "Documents don't have the same number of groups");
-    return;
+    throw "Documents don't have the same number of groups";
   }
 
   // Loop through all groups of document 1
   files[0].RVPresentationDocument.array[0].RVSlideGrouping.forEach(function(currentGroup, indexGroup) {
     // Check if slides exist, otherwise abort
-    if (!currentGroup.array[0].hasOwnProperty("RVDisplaySlide")) {
-      ipcRenderer.send('log', "Document doesn't have any slides");
-      //return;
+    if ((!currentGroup.array[0].hasOwnProperty("RVDisplaySlide")) || !files[1].RVPresentationDocument.array[0].RVSlideGrouping[indexGroup].array[0].hasOwnProperty("RVDisplaySlide")) {
+      throw "At least one document doesn't have any slides";
     } else if (currentGroup.array[0].RVDisplaySlide.length != files[1].RVPresentationDocument.array[0].RVSlideGrouping[indexGroup].array[0].RVDisplaySlide.length) {
-      ipcRenderer.send('log', "Documents don't have the same number of slides");
-      //return;
+      throw "Documents don't have the same number of slides";
     }
 
     //ipcRenderer.send('log', "Processing group " + indexGroup + " with " + currentGroup.array[0].RVDisplaySlide.length + " slide(s)");
@@ -137,37 +139,22 @@ function mergeLang(files) {
 }
 
 async function switchLang(pathToFile) {
-  let newFile = await parseFile(fs.readFileSync(pathToFile, 'utf8')); // Read and parse file
-  newFile = changeOrder(newFile); // Loop through slides and change order of text elements
-  newFile = buildXML(newFile); // Re-build XML
-  // Write file
-  fs.writeFile(path.resolve(pathToFile), newFile, function(err) {
-    if (err) throw err;
-    ipcRenderer.send('log', path.basename(pathToFile) + " saved");
-    notification.body = 'Sprachen in ' + path.basename(pathToFile) + ' wurden getauscht';
-    const myNotification = new window.Notification(notification.title, notification);
-  });
-}
-
-function mainFillNotes(pathToFile) {
-  // Read file
-  let file = fs.readFileSync(pathToFile, 'utf8');
-
-  parseFile(file) // Parse file
-    .then(fillNotes) // Fill notes
-    .then(function(newFile) {
-      newFile = buildXML(newFile); // Re-build XML
-      // Write file
-      fs.writeFile(path.resolve(pathToFile), newFile, function(err) {
-        if (err) throw err;
-        ipcRenderer.send('log', path.basename(pathToFile) + " saved");
-        notification.body = 'Notizen in ' + path.basename(pathToFile) + ' wurden gefüllt';
-        const myNotification = new window.Notification(notification.title, notification);
-      });
-    })
-    .catch(function(error) {
-      ipcRenderer.send('log', "Error: " + error);
+  try {
+    let newFile = await parseFile(fs.readFileSync(pathToFile, 'utf8')); // Read and parse file
+    newFile = changeOrder(newFile); // Loop through slides and change order of text elements
+    newFile = await fillNotes(newFile);
+    newFile = buildXML(newFile); // Re-build XML
+    // Write file
+    fs.writeFile(path.resolve(pathToFile), newFile, function(err) {
+      if (err) throw err;
+      ipcRenderer.send('log', path.basename(pathToFile) + " saved");
+      notification.body = 'Sprachen in ' + path.basename(pathToFile) + ' wurden getauscht';
+      const myNotification = new window.Notification(notification.title, notification);
     });
+  } catch (error) {
+    ipcRenderer.send('open-error-dialog', error);
+    ipcRenderer.send('log', "Error: " + error);
+  }
 }
 
 function changeOrder(file) {
@@ -176,8 +163,8 @@ function changeOrder(file) {
 
     // Check if slides exist, otherwise abort
     if (!currentGroup.array[0].hasOwnProperty("RVDisplaySlide")) {
-      ipcRenderer.send('log', "Document doesn't have any slides");
-      return file;
+      //ipcRenderer.send('log', "Document doesn't have any slides");
+      throw "Document doesn't have any slides";
     }
 
     // Loop through all slides
@@ -197,6 +184,28 @@ function changeOrder(file) {
   return file;
 }
 
+function mainFillNotes(pathToFile) {
+  // Read file
+  let file = fs.readFileSync(pathToFile, 'utf8');
+
+  parseFile(file) // Parse file
+    .then(fillNotes) // Fill notes
+    .then(function(newFile) {
+      newFile = buildXML(newFile); // Re-build XML
+      // Write file
+      fs.writeFile(path.resolve(pathToFile), newFile, function(err) {
+        if (err) throw err;
+        ipcRenderer.send('log', path.basename(pathToFile) + " saved");
+        notification.body = 'Notizen in ' + path.basename(pathToFile) + ' wurden gefüllt';
+        const myNotification = new window.Notification(notification.title, notification);
+      });
+    })
+    .catch(function(error) {
+      ipcRenderer.send('open-error-dialog', error);
+      ipcRenderer.send('log', "Error: " + error);
+    });
+}
+
 // Fill notes
 function fillNotes(parsedFile) {
   var promises = [];
@@ -207,9 +216,7 @@ function fillNotes(parsedFile) {
 
     // Check if slides exist, otherwise abort
     if (!currentGroup.array[0].hasOwnProperty("RVDisplaySlide")) {
-      ipcRenderer.send('log', "Document doesn't have any slides");
-      promises.push(parsedFile);
-      return;
+      throw "Document doesn't have any slides";
     }
 
     // Loop through all slides
@@ -270,7 +277,7 @@ function parseFile(file) {
   return new Promise((resolve, reject) => {
     parser.parseString(file, function(err, result) {
       if (err) {
-        ipcRenderer.send('log', "Error during parsed");
+        ipcRenderer.send('log', "Error during parsing");
         reject(err);
       } else {
         ipcRenderer.send('log', "File parsed");
@@ -280,16 +287,16 @@ function parseFile(file) {
   });
 }
 
-async function parseFile2(file) {
-  try {
-    let parsedFile = await parser.parseString(file);
-    ipcRenderer.send('log', "File parsed with parseFile2");
-    ipcRenderer.send('log', parsedFile);
-    return parsedFile;
-  } catch (error) {
-    ipcRenderer.send('log', error);
-  }
-}
+// async function parseFile2(file) {
+//   try {
+//     let parsedFile = await parser.parseString(file);
+//     ipcRenderer.send('log', "File parsed with parseFile2");
+//     return parsedFile;
+//   } catch (error) {
+//     ipcRenderer.send('open-error-dialog', error);
+//     ipcRenderer.send('log', error);
+//   }
+// }
 
 // Build XML file
 function buildXML(file) {
