@@ -9,11 +9,11 @@
     "package-win": "electron-packager . ProPresenter-Suite --overwrite --asar=true --platform=win32 --arch=ia32 --icon=assets/icons/icon.ico --prune=true --out=release-builds --version-string.CompanyName=JS --version-string.FileDescription=JS --version-string.ProductName=\"ProPresenter Suite\""
   },
   "dependencies": {
-    "textract": "2.2.0",
+    "textract": "^2.2.0",
     "xml2js": "^0.4.19"
   },
   "devDependencies": {
-    "electron": "4.1.0",
+    "electron": "^4.1.0",
     "electron-packager": "^13.1.1"
   }
 }
