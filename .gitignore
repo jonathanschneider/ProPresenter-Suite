@@ -1,2 +1,4 @@
 release-builds/
 node_modules/
+.jshintrc
+.DS_Store
