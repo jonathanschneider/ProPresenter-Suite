@@ -9,6 +9,13 @@ Accomplishing this in ProPresenter can be quite cumbersome so this little suite 
 -  Merge two presentations into one (merge two languages)
 -  Switch the layers of two text fields in one presentation (switch languages)
 
+## Installation
+
+The release_builds folder contains executables for Windows and macOS.
+
+For Windows [UnRTF](https://www.gnu.org/software/unrtf/) must be installed manually.
+
+
 ## Development
 
 As we have upgraded to ProPresenter 7 this project is no longer maintained but maybe it helps someone else. Unfortunately the GUI is only in German. Pull requests welcome.
