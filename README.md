@@ -11,7 +11,7 @@ Accomplishing this in ProPresenter 6 can be quite cumbersome so this little suit
 
 ## Installation
 
-Executables for Windows and macOS are available in the releases section.
+Executables for Windows and macOS are available in under [releases](https://github.com/jonathanschneider/ProPresenter-Suite/releases).
 
 For Windows [UnRTF](https://www.gnu.org/software/unrtf/) must be installed manually.
 
