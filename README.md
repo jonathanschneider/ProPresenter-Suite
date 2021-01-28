@@ -9,6 +9,8 @@ Accomplishing this in ProPresenter 6 can be quite cumbersome so this little suit
 * Merge two presentations into one (merge two languages)
 * Switch the layers of two text fields in one presentation (switch languages)
 
+![alt text](https://github.com/jonathanschneider/ProPresenter-Suite/assets/images/ProPresenter-Suite.png "GUI")
+
 ## Installation
 
 Executables for Windows and macOS are available in under [releases](https://github.com/jonathanschneider/ProPresenter-Suite/releases).
