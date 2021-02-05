@@ -12,6 +12,7 @@
     "create-installer-win": "node installers/windows/createinstaller.js"
   },
   "dependencies": {
+    "protobufjs": "^6.10.2",
     "textract": "^2.2.0",
     "xml2js": "^0.4.19"
   },
