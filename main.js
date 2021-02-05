@@ -47,7 +47,7 @@ ipcMain.on('open-file-dialog', (event, selection) => {
     properties: ['openFile', selection],
     filters: [{
       name: 'text',
-      extensions: ['pro6']
+      extensions: ['pro6', 'pro']
     }]
   }, (files) => {
     if (files) {
