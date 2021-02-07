@@ -3,10 +3,11 @@ const {
   ipcRenderer
 } = require('electron');
 const fs = require('fs');
-const path = require("path");
+const path = require('path');
 var pro6 = require('./lib/editPro6');
+var pro7 = require('./lib/editPro7');
 
-let curFunction = "";
+let curFunction = '';
 
 // Text fields
 let fileLang1 = document.getElementById('fileLang1Field');
@@ -21,47 +22,59 @@ const fillNotesBtn = document.getElementById('fillNotesBtn');
 
 // Open file dialogs
 browseLang1.addEventListener('click', (event) => {
-  curFunction = "browseLang1";
+  curFunction = 'browseLang1';
   ipcRenderer.send('open-file-dialog');
 });
 
 browseLang2.addEventListener('click', (event) => {
-  curFunction = "browseLang2";
+  curFunction = 'browseLang2';
   ipcRenderer.send('open-file-dialog');
 });
 
 switchLangBtn.addEventListener('click', (event) => {
-  curFunction = "switchLang";
+  curFunction = 'switchLang';
   ipcRenderer.send('open-file-dialog', 'multiSelections');
 });
 
 fillNotesBtn.addEventListener('click', (event) => {
-  curFunction = "fillNotes";
+  curFunction = 'fillNotes';
   ipcRenderer.send('open-file-dialog', 'multiSelections');
 });
 
 // Process selected files from main process
 ipcRenderer.on('selected-files', (event, files) => {
   switch (curFunction) {
-    case "browseLang1":
+    case 'browseLang1':
       fileLang1.value = files;
-      if (fileLang2Field.value != "") {
+      if (fileLang2Field.value != '') {
         mergeLangBtn.disabled = false;
       }
       break;
-    case "browseLang2":
+    case 'browseLang2':
       fileLang2.value = files;
-      if (fileLang1Field.value != "") {
+      if (fileLang1Field.value != '') {
         mergeLangBtn.disabled = false;
       }
       break;
-    case "switchLang":
-      ipcRenderer.send('log', "Files to process: " + files.length);
-      files.forEach(pro6.switchLanguages);
+    case 'switchLang':
+      ipcRenderer.send('log', 'Files to process: ' + files.length);
+      files.forEach(file => {
+        if (path.extname(file) === '.pro') {
+          pro7.switchLanguages(file);
+        } else {
+          pro6.switchLanguages(file);
+        }
+      });
       break;
-    case "fillNotes":
-      ipcRenderer.send('log', "Files to process: " + files.length);
-      files.forEach(pro6.fillNotes);
+    case 'fillNotes':
+      ipcRenderer.send('log', 'Files to process: ' + files.length);
+      files.forEach(file => {
+        if (path.extname(file) === '.pro') {
+          pro7.fillNotes(file);
+        } else {
+          pro6.fillNotes(file);
+        }
+      });
   }
 });
 
