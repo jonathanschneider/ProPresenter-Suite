@@ -9,7 +9,7 @@ Accomplishing this in ProPresenter 6 can be quite cumbersome so this little suit
 * Merge two presentations into one (merge two languages)
 * Switch the layers of two text fields in one presentation (switch languages)
 
-![alt text](https://github.com/jonathanschneider/ProPresenter-Suite/blob/master/assets/images/ProPresenter-Suite.png "GUI")
+![alt text](https://github.com/jonathanschneider/ProPresenter-Suite/blob/master/assets/images/gui.png "GUI")
 
 ## Installation
 
@@ -23,8 +23,6 @@ For Windows [UnRTF](https://www.gnu.org/software/unrtf/) must be installed manua
 1. In the section of the function you want to execute, browse the file you want to edit. ProPresenter Suite will show a notification once it finishes.
 1. In ProPresenter force save by pressing Ctrl + S or Cmd + S.
 1. Choose "Revert" in the dialog.
-
-Unfortunately the GUI is only in German. Pull requests are welcome.
 
 ## Development
 
