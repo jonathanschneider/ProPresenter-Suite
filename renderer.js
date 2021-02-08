@@ -9,7 +9,7 @@ var pro7 = require('./lib/editPro7');
 
 let curFunction = '';
 let notification = {
-  title: 'ProPresenter Suite',
+  title: 'ProPresenter Suite', // Fallback
   body: ''
 };
 
@@ -67,14 +67,14 @@ ipcRenderer.on('selected-files', (event, files) => {
           pro7.switchLanguages(file)
             .then(message => {
               notification.body = message;
-              const myNotification = new window.Notification(notification.title, notification);
+              const myNotification = new window.Notification('Languages switched', notification);
             })
             .catch(error => ipcRenderer.send('log', error));
         } else {
           pro6.switchLanguages(file)
             .then(message => {
               notification.body = message;
-              const myNotification = new window.Notification(notification.title, notification);
+              const myNotification = new window.Notification('Languages switched', notification);
             })
             .catch(error => ipcRenderer.send('log', error));
         }
@@ -87,14 +87,14 @@ ipcRenderer.on('selected-files', (event, files) => {
           pro7.fillNotes(file)
             .then(message => {
               notification.body = message;
-              const myNotification = new window.Notification(notification.title, notification);
+              const myNotification = new window.Notification('Notes filled', notification);
             })
             .catch(error => ipcRenderer.send('log', error));
         } else {
           pro6.fillNotes(file)
             .then(message => {
               notification.body = message;
-              const myNotification = new window.Notification(notification.title, notification);
+              const myNotification = new window.Notification('Notes filled', notification);
             })
             .catch(error => ipcRenderer.send('log', error));
         }
@@ -110,14 +110,14 @@ mergeLangBtn.addEventListener('click', (event) => {
     pro7.mergeLanguages(fileLang1.value, fileLang2.value)
       .then(message => {
         notification.body = message;
-        const myNotification = new window.Notification(notification.title, notification);
+        const myNotification = new window.Notification('Languages merged', notification);
       })
       .catch(error => ipcRenderer.send('log', error));
   } else {
     pro6.mergeLanguages(fileLang1.value, fileLang2.value)
       .then(message => {
         notification.body = message;
-        const myNotification = new window.Notification(notification.title, notification);
+        const myNotification = new window.Notification('Languages merged', notification);
       })
       .catch(error => ipcRenderer.send('log', error));
   }
