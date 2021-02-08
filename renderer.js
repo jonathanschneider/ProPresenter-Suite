@@ -8,6 +8,10 @@ var pro6 = require('./lib/editPro6');
 var pro7 = require('./lib/editPro7');
 
 let curFunction = '';
+let notification = {
+  title: 'ProPresenter Suite',
+  body: ''
+};
 
 // Text fields
 let fileLang1 = document.getElementById('fileLang1Field');
@@ -60,9 +64,19 @@ ipcRenderer.on('selected-files', (event, files) => {
       ipcRenderer.send('log', 'Files to process: ' + files.length);
       files.forEach(file => {
         if (path.extname(file) === '.pro') {
-          pro7.switchLanguages(file);
+          pro7.switchLanguages(file)
+            .then(message => {
+              notification.body = message;
+              const myNotification = new window.Notification(notification.title, notification);
+            })
+            .catch(error => ipcRenderer.send('log', error));
         } else {
-          pro6.switchLanguages(file);
+          pro6.switchLanguages(file)
+            .then(message => {
+              notification.body = message;
+              const myNotification = new window.Notification(notification.title, notification);
+            })
+            .catch(error => ipcRenderer.send('log', error));
         }
       });
       break;
@@ -70,9 +84,19 @@ ipcRenderer.on('selected-files', (event, files) => {
       ipcRenderer.send('log', 'Files to process: ' + files.length);
       files.forEach(file => {
         if (path.extname(file) === '.pro') {
-          pro7.fillNotes(file);
+          pro7.fillNotes(file)
+            .then(message => {
+              notification.body = message;
+              const myNotification = new window.Notification(notification.title, notification);
+            })
+            .catch(error => ipcRenderer.send('log', error));
         } else {
-          pro6.fillNotes(file);
+          pro6.fillNotes(file)
+            .then(message => {
+              notification.body = message;
+              const myNotification = new window.Notification(notification.title, notification);
+            })
+            .catch(error => ipcRenderer.send('log', error));
         }
       });
   }
@@ -80,5 +104,21 @@ ipcRenderer.on('selected-files', (event, files) => {
 
 // Start merging languages
 mergeLangBtn.addEventListener('click', (event) => {
-  pro6.mergeLanguages(fileLang1.value, fileLang2.value);
+  if (path.extname(fileLang1.value) !== path.extname(fileLang2.value)) throw "Files types don't match";
+
+  if (path.extname(fileLang1.value) === '.pro') {
+    pro7.mergeLanguages(fileLang1.value, fileLang2.value)
+      .then(message => {
+        notification.body = message;
+        const myNotification = new window.Notification(notification.title, notification);
+      })
+      .catch(error => ipcRenderer.send('log', error));
+  } else {
+    pro6.mergeLanguages(fileLang1.value, fileLang2.value)
+      .then(message => {
+        notification.body = message;
+        const myNotification = new window.Notification(notification.title, notification);
+      })
+      .catch(error => ipcRenderer.send('log', error));
+  }
 });
