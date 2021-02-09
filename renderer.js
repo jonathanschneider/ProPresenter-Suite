@@ -69,14 +69,14 @@ ipcRenderer.on('selected-files', (event, files) => {
               notification.body = message;
               const myNotification = new window.Notification('Languages switched', notification);
             })
-            .catch(error => ipcRenderer.send('log', error));
+            .catch(error => ipcRenderer.send('open-error-dialog', error));
         } else {
           pro6.switchLanguages(file)
             .then(message => {
               notification.body = message;
               const myNotification = new window.Notification('Languages switched', notification);
             })
-            .catch(error => ipcRenderer.send('log', error));
+            .catch(error => ipcRenderer.send('open-error-dialog', error));
         }
       });
       break;
@@ -89,14 +89,14 @@ ipcRenderer.on('selected-files', (event, files) => {
               notification.body = message;
               const myNotification = new window.Notification('Notes filled', notification);
             })
-            .catch(error => ipcRenderer.send('log', error));
+            .catch(error => ipcRenderer.send('open-error-dialog', error));
         } else {
           pro6.fillNotes(file)
             .then(message => {
               notification.body = message;
               const myNotification = new window.Notification('Notes filled', notification);
             })
-            .catch(error => ipcRenderer.send('log', error));
+            .catch(error => ipcRenderer.send('open-error-dialog', error));
         }
       });
   }
@@ -112,13 +112,13 @@ mergeLangBtn.addEventListener('click', (event) => {
         notification.body = message;
         const myNotification = new window.Notification('Languages merged', notification);
       })
-      .catch(error => ipcRenderer.send('log', error));
+      .catch(error => ipcRenderer.send('open-error-dialog', error));
   } else {
     pro6.mergeLanguages(fileLang1.value, fileLang2.value)
       .then(message => {
         notification.body = message;
         const myNotification = new window.Notification('Languages merged', notification);
       })
-      .catch(error => ipcRenderer.send('log', error));
+      .catch(error => ipcRenderer.send('open-error-dialog', error));
   }
 });

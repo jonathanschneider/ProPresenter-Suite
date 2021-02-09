@@ -57,8 +57,9 @@ ipcMain.on('open-file-dialog', (event, selection) => {
 });
 
 // Show error messages
-ipcMain.on('open-error-dialog', (event, message) => {
-  dialog.showErrorBox('Oops! Something went wrong!', message);
+ipcMain.on('open-error-dialog', (event, error) => {  
+  console.error('Error:', error); // Log for developing purposes
+  dialog.showErrorBox('Oops! Something went wrong!', error);
 });
 
 // Log messages to console for debugging
