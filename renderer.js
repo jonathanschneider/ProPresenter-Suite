@@ -104,7 +104,7 @@ ipcRenderer.on('selected-files', (event, files) => {
 
 // Start merging languages
 mergeLangBtn.addEventListener('click', (event) => {
-  if (path.extname(fileLang1.value) !== path.extname(fileLang2.value)) throw "Files types don't match";
+  if (path.extname(fileLang1.value) !== path.extname(fileLang2.value)) throw "File types don't match";
 
   if (path.extname(fileLang1.value) === '.pro') {
     pro7.mergeLanguages(fileLang1.value, fileLang2.value)
