@@ -28,4 +28,31 @@ Unfortunately the GUI is only in German. Pull requests are welcome.
 
 ## Development
 
-As we have upgraded to ProPresenter 7 this project is no longer maintained but maybe it helps someone else.
+I have started to upgrade the app for ProPresenter 7. If you can't wait or want to contribute, check out the [dev-pro7](https://github.com/jonathanschneider/ProPresenter-Suite/tree/dev-pro7) branch.
+
+### Getting Started
+
+If you want to contribute, here are some hints to get you started:
+
+This app is built on [Electron](https://www.electronjs.org) and thus requires [Node.js](https://nodejs.org).
+
+Clone repository and install dependencies:
+
+    git clone https://github.com/jonathanschneider/ProPresenter-Suite.git
+    cd ProPresenter-Suite
+    npm install --production=false
+
+Start the app from the CLI:
+
+    npm start
+
+Package app and create installers:
+* Windows:
+
+      npm run package-win
+      npm run create-installer-win
+
+* Mac:
+
+      npm run package-mac
+      npm run create-installer-mac
