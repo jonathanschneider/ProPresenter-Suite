@@ -107,7 +107,7 @@ mergeLangBtn.addEventListener('click', (event) => {
   if (path.extname(fileLang1.value) !== path.extname(fileLang2.value)) throw "File types don't match";
 
   if (path.extname(fileLang1.value) === '.pro') {
-    pro7.mergeLanguages(fileLang1.value, fileLang2.value)
+    pro7.mergeLanguages([fileLang1.value, fileLang2.value])
       .then(message => {
         notification.body = message;
         const myNotification = new window.Notification('Languages merged', notification);
