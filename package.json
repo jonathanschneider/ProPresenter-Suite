@@ -1,8 +1,8 @@
 {
   "name": "ProPresenter-Suite",
   "productName": "ProPresenter Suite",
-  "description": "Functions to manipulate ProPresenter 6 files",
-  "version": "1.0.0",
+  "description": "Functions to manipulate ProPresenter 6/7 files",
+  "version": "2.0.0",
   "main": "main.js",
   "scripts": {
     "start": "electron .",
@@ -13,7 +13,7 @@
   },
   "dependencies": {
     "protobufjs": "^6.10.2",
-    "textract": "^2.2.0",
+    "rtf2text": "^1.0.1",
     "xml2js": "^0.4.19"
   },
   "devDependencies": {
