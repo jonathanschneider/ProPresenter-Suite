@@ -4,18 +4,16 @@
 
 As a church in Germany we sing a lot of songs in English and want to display German translations as well. For our international community we want to display English translations for the German songs. Sometimes we want to switch the language. And on the stage display we'd rather only show the lyrics without the translations.
 
-Accomplishing this in ProPresenter 6 can be quite cumbersome so this little suite offers the following functions to manipulate ProPresenter 6 files:
+Accomplishing this in ProPresenter can be quite cumbersome so this little suite offers the following functions to manipulate ProPresenter 7 (.pro) and ProPresenter 6 (.pro6) files:
 * Copy the top layer text field to the slide notes (to display the slide notes on the stage display)
 * Merge two presentations into one (merge two languages)
 * Switch the layers of two text fields in one presentation (switch languages)
 
-![alt text](https://github.com/jonathanschneider/ProPresenter-Suite/blob/master/assets/images/ProPresenter-Suite.png "GUI")
+![alt text](https://github.com/jonathanschneider/ProPresenter-Suite/blob/master/assets/images/gui.png "GUI")
 
 ## Installation
 
-Executables for Windows and macOS are available under [releases](https://github.com/jonathanschneider/ProPresenter-Suite/releases).
-
-For Windows [UnRTF](https://www.gnu.org/software/unrtf/) must be installed manually.
+Installers for Windows and macOS are available in under [releases](https://github.com/jonathanschneider/ProPresenter-Suite/releases).
 
 ## Usage
 
@@ -24,13 +22,7 @@ For Windows [UnRTF](https://www.gnu.org/software/unrtf/) must be installed manua
 1. In ProPresenter force save by pressing Ctrl + S or Cmd + S.
 1. Choose "Revert" in the dialog.
 
-Unfortunately the GUI is only in German. Pull requests are welcome.
-
-## Development
-
-I have started to upgrade the app for ProPresenter 7. If you can't wait or want to contribute, check out the [dev-pro7](https://github.com/jonathanschneider/ProPresenter-Suite/tree/dev-pro7) branch.
-
-### Getting Started
+## Contribution
 
 If you want to contribute, here are some hints to get you started:
 
@@ -56,3 +48,7 @@ Package app and create installers:
 
       npm run package-mac
       npm run create-installer-mac
+      
+## Credits
+
+greyshirtguy for his [proto](https://github.com/greyshirtguy/ProPresenter7-Proto) files to decode ProPresenter 7 files

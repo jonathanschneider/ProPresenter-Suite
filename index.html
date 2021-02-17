@@ -7,63 +7,55 @@
 </head>
 
 <body>
-  <h1>ProPresenter Suite</h1>
-
-  <p>Klicke auf "Durchsuchen" und wähle die Datei aus, die bearbeitet werden soll.<br>
-    Nachdem die Funktion die Datei bearbeitet hat, drücke in ProPresenter "Cmd + S"
-    und wähle "Revert", um das Dokument neu zu laden.</p>
-
-  <hr>
   <div class="row">
-    <h3>Notizen füllen</h3>
+    <h3>Fill Notes</h3>
     <div class="column left">
-      <p>Füllt die Notizen eines Dokuments mit dem gesungenem Text.</p>
+      <p>Fills the slide notes with the text from the slides.</p>
     </div>
     <div class="colum right">
-      <button id="fillNotesBtn">Durchsuchen</button>
+      <button id="fillNotesBtn">Browse</button>
     </div>
   </div>
 
   <hr>
   <!-- <div class="row"> -->
-  <h3>Zwei Sprachen zusammenführen</h3>
-  <p>Führt zwei Dokumente zu einem zusammen, in dem es die Textelemente aus dem
-    Dokument mit der Übersetzung in das Dokument mit dem gesungenen Text einfügt.</p>
+  <h3>Merge Two Languages</h3>
+  <p>Merges two documents by adding the text elements of the second document (translation) to the first document and saves it as a new document.</p>
   <div class="row">
-    <p>Dokument mit gesungenem Text:</p>
+    <p>Document with text to sing:</p>
     <!-- </div> -->
     <!-- <div class="row"> -->
     <div class="column left">
       <input id="fileLang1Field" type="text" value="" readonly>
     </div>
     <div class="column right">
-      <button id="browseLang1">Durchsuchen</button>
+      <button id="browseLang1">Browse</button>
     </div>
   </div>
   <div class="row">
-    <p>Dokument mit Übersetzung:</p>
+    <p>Document with translation:</p>
     <!-- </div>
     <div class="row"> -->
     <div class="column left">
       <input id="fileLang2Field" type="text" value="" readonly>
     </div>
     <div class="column right">
-      <button id="browseLang2">Durchsuchen</button>
+      <button id="browseLang2">Browse</button>
     </div>
   </div>
   <div class="row">
-    <button id="mergeLangBtn" style="margin-top:10px" disabled>Starten</button>
+    <button id="mergeLangBtn" style="margin-top:10px" disabled>Run</button>
   </div>
   <!-- </div> -->
 
   <hr>
   <div class="row">
-    <h3>Sprachen tauschen</h3>
+    <h3>Switch Languages</h3>
     <div class="column left">
-      <p>Tauscht die Sprachen in einem Dokument.</p>
+      <p>Switches the languages in a document and saves it as a new doucment.</p>
     </div>
     <div class="column right">
-      <button id="switchLangBtn">Durchsuchen</button>
+      <button id="switchLangBtn">Browse</button>
     </div>
   </div>
 

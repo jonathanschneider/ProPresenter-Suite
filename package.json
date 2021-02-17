@@ -1,8 +1,8 @@
 {
   "name": "ProPresenter-Suite",
   "productName": "ProPresenter Suite",
-  "description": "Functions to manipulate ProPresenter 6 files",
-  "version": "1.0.0",
+  "description": "Functions to manipulate ProPresenter 6/7 files",
+  "version": "2.0.0",
   "main": "main.js",
   "scripts": {
     "start": "electron .",
@@ -12,7 +12,8 @@
     "create-installer-win": "node installers/windows/createinstaller.js"
   },
   "dependencies": {
-    "textract": "^2.2.0",
+    "protobufjs": "^6.10.2",
+    "rtf2text": "^1.0.1",
     "xml2js": "^0.4.19"
   },
   "devDependencies": {

@@ -1,11 +1,3 @@
-//handle setupevents as quickly as possible
-const setupEvents = require('./installers/setupEvents');
-
-if (setupEvents.handleSquirrelEvent()) {
-   // squirrel event handled and app will exit in 1000ms, so don't do anything else
-   return;
-}
-
 // Modules to control application life and create native browser window
 const {
   app,
@@ -14,13 +6,21 @@ const {
   dialog
 } = require('electron');
 
+//handle setupevents as quickly as possible
+const setupEvents = require('./installers/setupEvents');
+
+if (setupEvents.handleSquirrelEvent()) {
+   // squirrel event handled and app will exit in 1000ms, so don't do anything else
+   return;
+}
+
 let mainWindow;
 
 function createWindow() {
   // Create the browser window.
   mainWindow = new BrowserWindow({
     width: 700,
-    height: 675,
+    height: 550,
   });
 
   // and load the index.html of the app.
@@ -47,7 +47,7 @@ ipcMain.on('open-file-dialog', (event, selection) => {
     properties: ['openFile', selection],
     filters: [{
       name: 'text',
-      extensions: ['pro6']
+      extensions: ['pro6', 'pro']
     }]
   }, (files) => {
     if (files) {
@@ -57,8 +57,9 @@ ipcMain.on('open-file-dialog', (event, selection) => {
 });
 
 // Show error messages
-ipcMain.on('open-error-dialog', (event, message) => {
-  dialog.showErrorBox('Oops! Something went wrong!', message);
+ipcMain.on('open-error-dialog', (event, error) => {  
+  console.error('Error:', error); // Log for developing purposes
+  dialog.showErrorBox('Oops! Something went wrong!', error);
 });
 
 // Log messages to console for debugging
