@@ -13,7 +13,7 @@ Accomplishing this in ProPresenter can be quite cumbersome so this little suite 
 
 ## Installation
 
-Installers for Windows and macOS are available in under [releases](https://github.com/jonathanschneider/ProPresenter-Suite/releases).
+Installers for Windows and macOS are available under [releases](https://github.com/jonathanschneider/ProPresenter-Suite/releases).
 
 ## Usage
 
