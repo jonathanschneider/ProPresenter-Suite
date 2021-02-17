@@ -22,6 +22,33 @@ Installers for Windows and macOS are available in under [releases](https://githu
 1. In ProPresenter force save by pressing Ctrl + S or Cmd + S.
 1. Choose "Revert" in the dialog.
 
-## Development
+## Contribution
 
-As we have upgraded to ProPresenter 7 this project is no longer maintained but maybe it helps someone else.
+If you want to contribute, here are some hints to get you started:
+
+This app is built on [Electron](https://www.electronjs.org) and thus requires [Node.js](https://nodejs.org).
+
+Clone repository and install dependencies:
+
+    git clone https://github.com/jonathanschneider/ProPresenter-Suite.git
+    cd ProPresenter-Suite
+    npm install --production=false
+
+Start the app from the CLI:
+
+    npm start
+
+Package app and create installers:
+* Windows:
+
+      npm run package-win
+      npm run create-installer-win
+
+* Mac:
+
+      npm run package-mac
+      npm run create-installer-mac
+      
+## Credits
+
+greyshirtguy for his [proto](https://github.com/greyshirtguy/ProPresenter7-Proto) files to decode ProPresenter 7 files
