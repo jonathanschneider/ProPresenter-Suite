@@ -4,7 +4,7 @@
 
 As a church in Germany we sing a lot of songs in English and want to display German translations as well. For our international community we want to display English translations for the German songs. Sometimes we want to switch the language. And on the stage display we'd rather only show the lyrics without the translations.
 
-Accomplishing this in ProPresenter 6 can be quite cumbersome so this little suite offers the following functions to manipulate ProPresenter 6 files:
+Accomplishing this in ProPresenter can be quite cumbersome so this little suite offers the following functions to manipulate ProPresenter 7 (.pro) and ProPresenter 6 (.pro6) files:
 * Copy the top layer text field to the slide notes (to display the slide notes on the stage display)
 * Merge two presentations into one (merge two languages)
 * Switch the layers of two text fields in one presentation (switch languages)
@@ -13,9 +13,7 @@ Accomplishing this in ProPresenter 6 can be quite cumbersome so this little suit
 
 ## Installation
 
-Executables for Windows and macOS are available in under [releases](https://github.com/jonathanschneider/ProPresenter-Suite/releases).
-
-For Windows [UnRTF](https://www.gnu.org/software/unrtf/) must be installed manually.
+Installers for Windows and macOS are available in under [releases](https://github.com/jonathanschneider/ProPresenter-Suite/releases).
 
 ## Usage
 
