@@ -9,7 +9,7 @@ Accomplishing this in ProPresenter can be quite cumbersome so this little suite 
 * Merge two presentations into one (merge two languages)
 * Switch the layers of two text fields in one presentation (switch languages)
 
-![alt text](https://github.com/jonathanschneider/ProPresenter-Suite/blob/master/assets/images/gui.png "GUI")
+![alt text](assets/images/gui.png "GUI")
 
 ## Installation
 
