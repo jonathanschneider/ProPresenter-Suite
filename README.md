@@ -5,9 +5,9 @@
 As a church in Germany we sing a lot of songs in English and want to display German translations as well. For our international community we want to display English translations for the German songs. Sometimes we want to switch the language. And on the stage display we'd rather only show the lyrics without the translations.
 
 Accomplishing this in ProPresenter can be quite cumbersome so this little suite offers the following functions to manipulate ProPresenter 7 (.pro) and ProPresenter 6 (.pro6) files:
-* Copy the top layer text field to the slide notes (to display the slide notes on the stage display)
-* Merge two presentations into one (merge two languages)
-* Switch the layers of two text fields in one presentation (switch languages)
+* Fill notes: copies the text of the top layer text fields of each slide to the slide's notes (to display the slide notes on the stage display)
+* Merge two languages: copies the top layer text fields of each slide of one presentation into another and saves it as a new presentation
+* Switch language: switches the two top layer text fields of each slide of one presentation and saves it as a new presentation
 
 ![alt text](assets/images/gui.png "GUI")
 
@@ -48,7 +48,7 @@ Package app and create installers:
 
       npm run package-mac
       npm run create-installer-mac
-      
+
 ## Credits
 
 greyshirtguy for his [proto](https://github.com/greyshirtguy/ProPresenter7-Proto) files to decode ProPresenter 7 files
