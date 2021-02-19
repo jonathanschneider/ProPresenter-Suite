@@ -7,7 +7,7 @@ As a church in Germany we sing a lot of songs in English and want to display Ger
 Accomplishing this in ProPresenter can be quite cumbersome so this little suite offers the following functions to manipulate ProPresenter 7 (.pro) and ProPresenter 6 (.pro6) files:
 * Fill notes: copies the text of the top layer text fields of each slide to the slide's notes (to display the slide notes on the stage display)
 * Merge two languages: copies the top layer text fields of each slide of one presentation into another and saves it as a new presentation
-* Switch language: switches the two top layer text fields of each slide of one presentation and saves it as a new presentation
+* Switch languages: switches the two top layer text fields of each slide of one presentation and saves it as a new presentation
 
 ![alt text](assets/images/gui.png "GUI")
 
