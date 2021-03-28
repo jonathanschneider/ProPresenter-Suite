@@ -19,8 +19,9 @@ let mainWindow;
 function createWindow() {
   // Create the browser window.
   mainWindow = new BrowserWindow({
-    width: 700,
-    height: 550,
+    useContentSize: true
+    // width: 700,
+    // height: 550,
   });
 
   // and load the index.html of the app.
@@ -57,7 +58,7 @@ ipcMain.on('open-file-dialog', (event, selection) => {
 });
 
 // Show error messages
-ipcMain.on('open-error-dialog', (event, error) => {  
+ipcMain.on('open-error-dialog', (event, error) => {
   console.error('Error:', error); // Log for developing purposes
   dialog.showErrorBox('Oops! Something went wrong!', error);
 });
