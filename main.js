@@ -19,7 +19,8 @@ let mainWindow;
 function createWindow() {
   // Create the browser window.
   mainWindow = new BrowserWindow({
-    useContentSize: true
+    useContentSize: true,
+    autoHideMenuBar: true
     // width: 700,
     // height: 550,
   });
