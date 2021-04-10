@@ -2,7 +2,7 @@
   "name": "ProPresenter-Suite",
   "productName": "ProPresenter Suite",
   "description": "Functions to manipulate ProPresenter 6/7 files",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "main": "main.js",
   "scripts": {
     "start": "electron .",
