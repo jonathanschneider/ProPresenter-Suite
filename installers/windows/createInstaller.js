@@ -19,7 +19,7 @@ function getInstallerConfig () {
     noMsi: true,
     outputDirectory: path.join(outPath, 'windows-installer'),
     exe: 'ProPresenter-Suite.exe',
-    setupExe: 'ProPresenter-Suite-Installer-Windows.exe',
+    setupExe: 'ProPresenter-Suite-Windows.exe',
     setupIcon: path.join(rootPath, 'assets', 'icons', 'icon.ico')
   });
 }
