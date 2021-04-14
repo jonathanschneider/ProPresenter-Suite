@@ -40,7 +40,7 @@ module.exports = {
         // explorer context menus
 
         // Install desktop and start menu shortcuts
-        spawnUpdate(['--createShortcut', exeName]);
+        spawnUpdate(['--createShortcut', 'ProPresenter Suite']);
 
         setTimeout(app.quit, 1000);
         return true;
@@ -50,7 +50,7 @@ module.exports = {
         // --squirrel-updated handlers
 
         // Remove desktop and start menu shortcuts
-        spawnUpdate(['--removeShortcut', exeName]);
+        spawnUpdate(['--removeShortcut', 'ProPresenter Suite']);
 
         setTimeout(app.quit, 1000);
         return true;
