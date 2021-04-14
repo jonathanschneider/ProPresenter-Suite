@@ -41,6 +41,8 @@ module.exports = {
 
         // Install desktop and start menu shortcuts
         spawnUpdate(['--createShortcut', 'ProPresenter Suite']);
+        // Remove old desktop and start menu shortcuts
+        spawnUpdate(['--removeShortcut', 'ProPresenter-Suite']);
 
         setTimeout(app.quit, 1000);
         return true;
