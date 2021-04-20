@@ -3,3 +3,4 @@ node_modules/
 .jshintrc
 .DS_Store
 package-lock.json
+assets/icons/pp-suite-icon.ai
