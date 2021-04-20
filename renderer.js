@@ -7,7 +7,7 @@ const path = require('path');
 var pro6 = require('./lib/editPro6');
 var pro7 = require('./lib/editPro7');
 
-let curFunction = '';
+let func = '';
 let notification = {
   title: 'ProPresenter Suite', // Fallback
   body: ''
@@ -24,30 +24,32 @@ const mergeLangBtn = document.getElementById('mergeLangBtn');
 const switchLangBtn = document.getElementById('switchLangBtn');
 const fillNotesBtn = document.getElementById('fillNotesBtn');
 
+ipcRenderer.send('log', 'I was called');
+
 // Open file dialogs
+fillNotesBtn.addEventListener('click', (event) => {
+  func = 'fillNotes';
+  ipcRenderer.send('open-file-dialog', 'multiSelections');
+});
+
 browseLang1.addEventListener('click', (event) => {
-  curFunction = 'browseLang1';
+  func = 'browseLang1';
   ipcRenderer.send('open-file-dialog');
 });
 
 browseLang2.addEventListener('click', (event) => {
-  curFunction = 'browseLang2';
+  func = 'browseLang2';
   ipcRenderer.send('open-file-dialog');
 });
 
 switchLangBtn.addEventListener('click', (event) => {
-  curFunction = 'switchLang';
-  ipcRenderer.send('open-file-dialog', 'multiSelections');
-});
-
-fillNotesBtn.addEventListener('click', (event) => {
-  curFunction = 'fillNotes';
+  func = 'switchLang';
   ipcRenderer.send('open-file-dialog', 'multiSelections');
 });
 
 // Process selected files from main process
 ipcRenderer.on('selected-files', (event, files) => {
-  switch (curFunction) {
+  switch (func) {
     case 'browseLang1':
       fileLang1.value = files;
       if (fileLang2Field.value != '') {
