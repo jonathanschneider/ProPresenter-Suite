@@ -1,7 +1,7 @@
 {
   "name": "ProPresenter-Suite",
   "productName": "ProPresenter Suite",
-  "description": "Functions to manipulate ProPresenter 6/7 files",
+  "description": "A little application to manipulate ProPresenter files for multi-lingual churches",
   "version": "2.0.1",
   "main": "main.js",
   "scripts": {
