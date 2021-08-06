@@ -10,8 +10,8 @@ const {
 const setupEvents = require('./installers/setupEvents');
 
 if (setupEvents.handleSquirrelEvent()) {
-   // squirrel event handled and app will exit in 1000ms, so don't do anything else
-   return;
+  // squirrel event handled and app will exit in 1000ms, so don't do anything else
+  return;
 }
 
 let mainWindow;
@@ -26,8 +26,8 @@ function createWindow() {
     minHeight: 530,
     autoHideMenuBar: true,
     webPreferences: {
-        nodeIntegration: true,
-        contextIsolation: false
+      nodeIntegration: true,
+      contextIsolation: false
     }
   });
 
@@ -48,16 +48,13 @@ app.on('ready', createWindow);
 
 // Open file dialog upon request
 ipcMain.on('open-file-dialog', (event, selection) => {
-  let files = dialog.showOpenDialogSync({
+  event.returnValue = dialog.showOpenDialogSync({
     properties: ['openFile', selection],
     filters: [{
       name: 'text',
       extensions: ['pro6', 'pro']
     }]
   });
-  if (files !== undefined) {
-    event.reply('selected-files', files);
-  }
 });
 
 // Show error messages

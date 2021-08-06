@@ -7,7 +7,6 @@ const path = require('path');
 var pro6 = require('./lib/editPro6');
 var pro7 = require('./lib/editPro7');
 
-let func = '';
 let notification = {
   title: 'ProPresenter Suite', // Fallback
   body: ''
@@ -24,82 +23,50 @@ const mergeLangBtn = document.getElementById('mergeLangBtn');
 const switchLangBtn = document.getElementById('switchLangBtn');
 const fillNotesBtn = document.getElementById('fillNotesBtn');
 
-// Open file dialogs
+// Fill notes
 fillNotesBtn.addEventListener('click', (event) => {
-  func = 'fillNotes';
-  ipcRenderer.send('open-file-dialog', 'multiSelections');
-});
+  files = ipcRenderer.sendSync('open-file-dialog', 'multiSelections');
 
-browseLang1.addEventListener('click', (event) => {
-  func = 'browseLang1';
-  ipcRenderer.send('open-file-dialog');
-});
-
-browseLang2.addEventListener('click', (event) => {
-  func = 'browseLang2';
-  ipcRenderer.send('open-file-dialog');
-});
-
-switchLangBtn.addEventListener('click', (event) => {
-  func = 'switchLang';
-  ipcRenderer.send('open-file-dialog', 'multiSelections');
-});
-
-// Process selected files from main process
-ipcRenderer.on('selected-files', (event, files) => {
-  switch (func) {
-    case 'fillNotes':
-      ipcRenderer.send('log', 'Files to process: ' + files.length);
-      files.forEach(file => {
-        if (path.extname(file) === '.pro') {
-          pro7.fillNotes(file)
-            .then(message => {
-              notification.body = message;
-              const myNotification = new window.Notification('Notes filled', notification);
-            })
-            .catch(error => ipcRenderer.send('open-error-dialog', error));
-        } else {
-          pro6.fillNotes(file)
-            .then(message => {
-              notification.body = message;
-              const myNotification = new window.Notification('Notes filled', notification);
-            })
-            .catch(error => ipcRenderer.send('open-error-dialog', error));
-        }
-      });
-      break;
-    case 'browseLang1':
-      fileLang1.value = files;
-      if (fileLang2Field.value !== '') {
-        mergeLangBtn.disabled = false;
+  if (files !== undefined) {
+    ipcRenderer.send('log', 'Files to process: ' + files.length);
+    files.forEach(file => {
+      if (path.extname(file) === '.pro') {
+        pro7.fillNotes(file)
+          .then(message => {
+            notification.body = message;
+            const myNotification = new window.Notification('Notes filled', notification);
+          })
+          .catch(error => ipcRenderer.send('open-error-dialog', error));
+      } else {
+        pro6.fillNotes(file)
+          .then(message => {
+            notification.body = message;
+            const myNotification = new window.Notification('Notes filled', notification);
+          })
+          .catch(error => ipcRenderer.send('open-error-dialog', error));
       }
-      break;
-    case 'browseLang2':
-      fileLang2.value = files;
-      if (fileLang1Field.value !== '') {
-        mergeLangBtn.disabled = false;
-      }
-      break;
-    case 'switchLang':
-      ipcRenderer.send('log', 'Files to process: ' + files.length);
-      files.forEach(file => {
-        if (path.extname(file) === '.pro') {
-          pro7.switchLanguages(file)
-            .then(message => {
-              notification.body = message;
-              const myNotification = new window.Notification('Languages switched', notification);
-            })
-            .catch(error => ipcRenderer.send('open-error-dialog', error));
-        } else {
-          pro6.switchLanguages(file)
-            .then(message => {
-              notification.body = message;
-              const myNotification = new window.Notification('Languages switched', notification);
-            })
-            .catch(error => ipcRenderer.send('open-error-dialog', error));
-        }
-      });
+    });
   }
+});
+
+// Merge two languages
+
+// Select first file
+browseLang1.addEventListener('click', (event) => {
+  file = ipcRenderer.sendSync('open-file-dialog');
+
+  if (file !== undefined) fileLang1.value = file;
+  if (fileLang2Field.value !== '') {
+    mergeLangBtn.disabled = false;
+  }
+});
+
+// Select second file
+browseLang2.addEventListener('click', (event) => {
+  file = ipcRenderer.sendSync('open-file-dialog');
+
+  if (file !== undefined) fileLang2.value = file;
+  if (fileLang2Field.value !== '') mergeLangBtn.disabled = false;
 });
 
 // Start merging languages
@@ -120,5 +87,31 @@ mergeLangBtn.addEventListener('click', (event) => {
         const myNotification = new window.Notification('Languages merged', notification);
       })
       .catch(error => ipcRenderer.send('open-error-dialog', error));
+  }
+});
+
+// Switch languages
+switchLangBtn.addEventListener('click', (event) => {
+  files = ipcRenderer.sendSync('open-file-dialog', 'multiSelections');
+
+  if (files !== undefined) {
+    ipcRenderer.send('log', 'Files to process: ' + files.length);
+    files.forEach(file => {
+      if (path.extname(file) === '.pro') {
+        pro7.switchLanguages(file)
+          .then(message => {
+            notification.body = message;
+            const myNotification = new window.Notification('Languages switched', notification);
+          })
+          .catch(error => ipcRenderer.send('open-error-dialog', error));
+      } else {
+        pro6.switchLanguages(file)
+          .then(message => {
+            notification.body = message;
+            const myNotification = new window.Notification('Languages switched', notification);
+          })
+          .catch(error => ipcRenderer.send('open-error-dialog', error));
+      }
+    });
   }
 });
