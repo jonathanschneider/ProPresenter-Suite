@@ -24,8 +24,6 @@ const mergeLangBtn = document.getElementById('mergeLangBtn');
 const switchLangBtn = document.getElementById('switchLangBtn');
 const fillNotesBtn = document.getElementById('fillNotesBtn');
 
-ipcRenderer.send('log', 'I was called');
-
 // Open file dialogs
 fillNotesBtn.addEventListener('click', (event) => {
   func = 'fillNotes';
@@ -50,15 +48,35 @@ switchLangBtn.addEventListener('click', (event) => {
 // Process selected files from main process
 ipcRenderer.on('selected-files', (event, files) => {
   switch (func) {
+    case 'fillNotes':
+      ipcRenderer.send('log', 'Files to process: ' + files.length);
+      files.forEach(file => {
+        if (path.extname(file) === '.pro') {
+          pro7.fillNotes(file)
+            .then(message => {
+              notification.body = message;
+              const myNotification = new window.Notification('Notes filled', notification);
+            })
+            .catch(error => ipcRenderer.send('open-error-dialog', error));
+        } else {
+          pro6.fillNotes(file)
+            .then(message => {
+              notification.body = message;
+              const myNotification = new window.Notification('Notes filled', notification);
+            })
+            .catch(error => ipcRenderer.send('open-error-dialog', error));
+        }
+      });
+      break;
     case 'browseLang1':
       fileLang1.value = files;
-      if (fileLang2Field.value != '') {
+      if (fileLang2Field.value !== '') {
         mergeLangBtn.disabled = false;
       }
       break;
     case 'browseLang2':
       fileLang2.value = files;
-      if (fileLang1Field.value != '') {
+      if (fileLang1Field.value !== '') {
         mergeLangBtn.disabled = false;
       }
       break;
@@ -77,26 +95,6 @@ ipcRenderer.on('selected-files', (event, files) => {
             .then(message => {
               notification.body = message;
               const myNotification = new window.Notification('Languages switched', notification);
-            })
-            .catch(error => ipcRenderer.send('open-error-dialog', error));
-        }
-      });
-      break;
-    case 'fillNotes':
-      ipcRenderer.send('log', 'Files to process: ' + files.length);
-      files.forEach(file => {
-        if (path.extname(file) === '.pro') {
-          pro7.fillNotes(file)
-            .then(message => {
-              notification.body = message;
-              const myNotification = new window.Notification('Notes filled', notification);
-            })
-            .catch(error => ipcRenderer.send('open-error-dialog', error));
-        } else {
-          pro6.fillNotes(file)
-            .then(message => {
-              notification.body = message;
-              const myNotification = new window.Notification('Notes filled', notification);
             })
             .catch(error => ipcRenderer.send('open-error-dialog', error));
         }

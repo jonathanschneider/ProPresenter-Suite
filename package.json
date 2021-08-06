@@ -9,17 +9,17 @@
     "package-mac": "electron-packager . --overwrite --platform=darwin --arch=x64 --icon=assets/icons/icon.icns --prune=true --out=release-builds",
     "package-win": "electron-packager . ProPresenter-Suite --overwrite --asar=true --platform=win32 --arch=ia32 --icon=assets/icons/icon.ico --prune=true --out=release-builds --version-string.CompanyName=JS --version-string.FileDescription=JS --version-string.ProductName=\"ProPresenter Suite\"",
     "create-installer-mac": "electron-installer-dmg ./release-builds/ProPresenter\\ Suite-darwin-x64/ProPresenter\\ Suite.app ProPresenter-Suite-macOS --out=release-builds --overwrite --icon=assets/icons/icon.icns",
-    "create-installer-win": "node installers/windows/createinstaller.js"
+    "create-installer-win": "node installers/windows/createInstaller.js"
   },
   "dependencies": {
-    "protobufjs": "^6.10.2",
+    "protobufjs": "^6.11.2",
     "rtf2text": "^1.0.1",
     "xml2js": "^0.4.19"
   },
   "devDependencies": {
-    "electron": "^4.2.12",
+    "electron": "^13.1.8",
     "electron-installer-dmg": "^3.0.0",
-    "electron-packager": "^13.1.1",
-    "electron-winstaller": "^4.0.1"
+    "electron-packager": "^15.2.0",
+    "electron-winstaller": "^5.0.0"
   }
 }

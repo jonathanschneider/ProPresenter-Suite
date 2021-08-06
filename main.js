@@ -20,18 +20,19 @@ function createWindow() {
   // Create the browser window.
   mainWindow = new BrowserWindow({
     width: 700,
-    height: 507,
+    height: 530,
     useContentSize: true,
     minWidth: 700,
-    minHeight: 507,
-    autoHideMenuBar: true
+    minHeight: 530,
+    autoHideMenuBar: true,
+    webPreferences: {
+        nodeIntegration: true,
+        contextIsolation: false
+    }
   });
 
   // and load the index.html of the app.
   mainWindow.loadFile('index.html');
-
-  // Open the DevTools.
-  // mainWindow.webContents.openDevTools()
 
   // Emitted when the window is closed.
   mainWindow.on('closed', function() {
@@ -47,17 +48,16 @@ app.on('ready', createWindow);
 
 // Open file dialog upon request
 ipcMain.on('open-file-dialog', (event, selection) => {
-  dialog.showOpenDialog({
+  let files = dialog.showOpenDialogSync({
     properties: ['openFile', selection],
     filters: [{
       name: 'text',
       extensions: ['pro6', 'pro']
     }]
-  }, (files) => {
-    if (files) {
-      event.sender.send('selected-files', files);
-    }
   });
+  if (files !== undefined) {
+    event.reply('selected-files', files);
+  }
 });
 
 // Show error messages
