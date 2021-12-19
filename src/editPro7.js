@@ -156,7 +156,7 @@ function readFile(pathToFile) {
     log('Reading file ' + path.basename(pathToFile));
     let buffer = fs.readFileSync(pathToFile);
 
-    protobuf.load(path.join(__dirname, '../plugins/ProPresenter7-Proto/proto/presentation.proto'), function(error, root) {
+    protobuf.load(path.join(__dirname, '../lib/ProPresenter7-Proto/proto/presentation.proto'), function(error, root) {
       if (error) throw error;
 
       // Obtain message type

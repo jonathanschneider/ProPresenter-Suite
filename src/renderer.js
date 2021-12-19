@@ -4,8 +4,8 @@ const {
 } = require('electron');
 const fs = require('fs');
 const path = require('path');
-var pro6 = require('./lib/editPro6');
-var pro7 = require('./lib/editPro7');
+var pro6 = require('./editPro6');
+var pro7 = require('./editPro7');
 
 let notification = {
   title: 'ProPresenter Suite', // Fallback

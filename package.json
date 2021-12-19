@@ -3,13 +3,13 @@
   "productName": "ProPresenter Suite",
   "description": "A little application to manipulate ProPresenter files for multi-lingual churches",
   "version": "2.0.1",
-  "main": "main.js",
+  "main": "src/main.js",
   "scripts": {
     "start": "electron .",
     "package-mac": "electron-packager . --overwrite --platform=darwin --arch=x64 --icon=assets/icons/icon.icns --prune=true --out=release-builds",
     "package-win": "electron-packager . ProPresenter-Suite --overwrite --asar=true --platform=win32 --arch=ia32 --icon=assets/icons/icon.ico --prune=true --out=release-builds --version-string.CompanyName=JS --version-string.FileDescription=JS --version-string.ProductName=\"ProPresenter Suite\"",
     "create-installer-mac": "electron-installer-dmg ./release-builds/ProPresenter\\ Suite-darwin-x64/ProPresenter\\ Suite.app ProPresenter-Suite-macOS --out=release-builds --overwrite --icon=assets/icons/icon.icns",
-    "create-installer-win": "node installers/windows/createInstaller.js"
+    "create-installer-win": "node src/installers/windows/createInstaller.js"
   },
   "dependencies": {
     "protobufjs": "^6.11.2",
