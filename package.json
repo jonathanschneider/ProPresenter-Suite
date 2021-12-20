@@ -2,7 +2,7 @@
   "name": "ProPresenter-Suite",
   "productName": "ProPresenter Suite",
   "description": "A little application to manipulate ProPresenter files for multi-lingual churches",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "main": "src/main.js",
   "scripts": {
     "start": "electron .",

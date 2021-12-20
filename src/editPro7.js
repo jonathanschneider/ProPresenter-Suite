@@ -32,14 +32,7 @@ async function fillNotes(pathToFile) {
     throw "Presentation doesn't contain any slides";
   }
 
-  presentation = await fillNotesSub(presentation);
-
-  // Write file
-  await writeFile(pathToFile, presentation);
-  return 'File saved as "' + path.basename(pathToFile) + '"';
-}
-
-async function fillNotesSub(presentation) {
+  // Fill notes
   for (const cue of presentation.cues) { // forEach doesn't consider await, use for instead
     for (const action of cue.actions) {
       // Filter slides with text
@@ -48,7 +41,7 @@ async function fillNotesSub(presentation) {
         if (process.platform === 'darwin') { // If platform is macOS extract text from RTF and copy to slide notes with pre-defined formatting
           // Get text from RTF
           let text = await getText(action.slide.presentation.baseSlide.elements[0].element.text.rtfData);
-
+          log(text);
           // Reassemble RTF for notes
           let buffer = Buffer.from(notesStyle + text + '}'); // Encode base64
           action.slide.presentation.notes = {
@@ -62,7 +55,10 @@ async function fillNotesSub(presentation) {
       }
     }
   }
-  return presentation;
+
+  // Write file
+  await writeFile(pathToFile, presentation);
+  return 'File saved as "' + path.basename(pathToFile) + '"';
 }
 
 async function mergeLanguages(paths) {
@@ -199,7 +195,7 @@ function getText(data) {
   let buffer = Buffer.from(data, 'base64'); // Convert to buffer
   let decoded = buffer.toString(); // Decode Base64
 
-  var basicRtfPattern = /\{\*?\\[^{}]+;}|[{}]|\\[A-Za-z]+\n?(?:-?\d+)?[ ]?/g;
+  var basicRtfPattern = /\{\*?\\[^{}]+;}|[{}]|\\[A-Za-z]+\n?(?:-?\d+)?[ ]?;*/g;
   var ctrlCharPattern = /\n\\f[0-9]\s/g;
 
   // Remove RTF formatting and remove whitespace
