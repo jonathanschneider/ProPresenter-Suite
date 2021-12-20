@@ -41,7 +41,7 @@ async function fillNotes(pathToFile) {
         if (process.platform === 'darwin') { // If platform is macOS extract text from RTF and copy to slide notes with pre-defined formatting
           // Get text from RTF
           let text = await getText(action.slide.presentation.baseSlide.elements[0].element.text.rtfData);
-          log(text);
+
           // Reassemble RTF for notes
           let buffer = Buffer.from(notesStyle + text + '}'); // Encode base64
           action.slide.presentation.notes = {
